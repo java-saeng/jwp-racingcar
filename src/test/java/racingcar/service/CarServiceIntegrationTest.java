@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import racingcar.domain.RacingGame;
+import racingcar.support.AbstractIntegrationTestSupporter;
 import racingcar.util.RandomNumberGenerator;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("CarService Integration Test")
-@SpringBootTest
-class CarServiceIntegrationTest {
+class CarServiceIntegrationTest extends AbstractIntegrationTestSupporter {
 
     @Autowired
     private CarService carService;

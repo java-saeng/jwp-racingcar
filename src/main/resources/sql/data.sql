@@ -1,9 +1,9 @@
 insert into RACE_RESULT
 values (1, 10, current_timestamp);
 insert into CAR
-values (1, '우르', 9, 1, 1, current_timestamp);
+values (1, '우르', 9, 1, 0, current_timestamp);
 insert into CAR
-values (2, '빙봉', 10, 1, 0, current_timestamp);
+values (2, '빙봉', 10, 1, 1, current_timestamp);
 
 insert into RACE_RESULT
 values (2, 5, current_timestamp);
