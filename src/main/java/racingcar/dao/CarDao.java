@@ -20,7 +20,7 @@ public class CarDao {
                     rs.getString("name"),
                     rs.getInt("position"),
                     rs.getLong("race_result_id"),
-                    rs.getBoolean("winner"),
+                    rs.getString("winner_yn"),
                     rs.getTimestamp("created_at").toLocalDateTime()
             );
 

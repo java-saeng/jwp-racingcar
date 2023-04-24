@@ -33,8 +33,8 @@ class CarDaoTest {
         //given
         final List<CarEntity> carEntities =
                 List.of(
-                        new CarEntity("a", 1, 3L, true, LocalDateTime.now()),
-                        new CarEntity("b", 2, 3L, true, LocalDateTime.now())
+                        new CarEntity("a", 1, 3L, "Y", LocalDateTime.now()),
+                        new CarEntity("b", 2, 3L, "Y", LocalDateTime.now())
                 );
 
         //when

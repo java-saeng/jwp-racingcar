@@ -117,10 +117,10 @@ class RaceResultServiceTest {
     void test_searchRaceResult() throws Exception {
         //given
         final List<CarEntity> cars =
-                List.of(new CarEntity("a", 2, 1L, true, LocalDateTime.now()),
-                        new CarEntity("b", 3, 1L, true, LocalDateTime.now()),
-                        new CarEntity("c", 1, 1L, true, LocalDateTime.now()),
-                        new CarEntity("d", 4, 1L, true, LocalDateTime.now()));
+                List.of(new CarEntity("a", 2, 1L, "Y", LocalDateTime.now()),
+                        new CarEntity("b", 3, 1L, "Y", LocalDateTime.now()),
+                        new CarEntity("c", 1, 1L, "Y", LocalDateTime.now()),
+                        new CarEntity("d", 4, 1L, "Y", LocalDateTime.now()));
 
         final List<CarStatusResponse> carStatusResponses = List.of(new CarStatusResponse("a", 2),
                                                                    new CarStatusResponse("b", 3),

@@ -59,9 +59,9 @@ class CarServiceTest {
         final Long savedRaceResultId = 1L;
 
         final List<CarEntity> carEntities = List.of(
-                new CarEntity("a", 3, 1L, true, LocalDateTime.now()),
-                new CarEntity("b", 3, 1L, true, LocalDateTime.now()),
-                new CarEntity("c", 3, 1L, true, LocalDateTime.now())
+                new CarEntity("a", 3, 1L, "Y", LocalDateTime.now()),
+                new CarEntity("b", 3, 1L, "Y", LocalDateTime.now()),
+                new CarEntity("c", 3, 1L, "Y", LocalDateTime.now())
         );
 
         //when

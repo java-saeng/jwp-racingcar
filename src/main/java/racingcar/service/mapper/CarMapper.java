@@ -25,8 +25,16 @@ public class CarMapper {
                 car.getName(),
                 car.getPosition(),
                 savedId,
-                racingGame.isWinner(car),
+                mapToWinner(racingGame.isWinner(car)),
                 LocalDateTime.now()
         );
+    }
+
+    private static String mapToWinner(boolean isWinner) {
+        if (isWinner) {
+            return "Y";
+        }
+
+        return "N";
     }
 }
