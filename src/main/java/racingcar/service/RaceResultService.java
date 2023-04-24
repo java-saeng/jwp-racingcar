@@ -19,14 +19,12 @@ public class RaceResultService {
     private final RaceResultDao raceResultDao;
     private final CarService carService;
     private final NumberGenerator numberGenerator;
-    private final RaceResultMapper raceResultMapper;
 
     public RaceResultService(final RaceResultDao raceResultDao, final CarService carService,
-                             final NumberGenerator numberGenerator, final RaceResultMapper raceResultMapper) {
+                             final NumberGenerator numberGenerator) {
         this.raceResultDao = raceResultDao;
         this.carService = carService;
         this.numberGenerator = numberGenerator;
-        this.raceResultMapper = raceResultMapper;
     }
 
     @Transactional
@@ -39,17 +37,17 @@ public class RaceResultService {
         );
         racingGame.play();
 
-        final RaceResultEntity raceResultEntity = raceResultMapper.mapToRaceResultEntity(racingGame);
+        final RaceResultEntity raceResultEntity = RaceResultMapper.mapToRaceResultEntity(racingGame);
         final Long savedId = raceResultDao.save(raceResultEntity);
 
         carService.registerCars(racingGame, savedId);
 
-        return raceResultMapper.mapToRaceResultResponse(racingGame);
+        return RaceResultMapper.mapToRaceResultResponse(racingGame);
     }
 
     @Transactional(readOnly = true)
     public List<RaceResultResponse> searchRaceResult() {
         final List<CarEntity> carEntities = carService.searchAllCars();
-        return raceResultMapper.mapToRaceResultResponses(carEntities);
+        return RaceResultMapper.mapToRaceResultResponses(carEntities);
     }
 }

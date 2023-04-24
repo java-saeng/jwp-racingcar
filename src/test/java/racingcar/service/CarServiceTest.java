@@ -1,8 +1,11 @@
 package racingcar.service;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import racingcar.dao.CarDao;
 import racingcar.domain.RacingGame;
 import racingcar.entity.CarEntity;
@@ -15,6 +18,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,16 +27,25 @@ import static org.mockito.Mockito.when;
 class CarServiceTest {
 
     private CarService carService;
+    private static MockedStatic<CarMapper> carMapper;
 
     private CarDao carDao;
-    private CarMapper carMapper;
 
     @BeforeEach
     void init() {
         carDao = mock(CarDao.class);
-        carMapper = mock(CarMapper.class);
 
-        carService = new CarService(carDao, carMapper);
+        carService = new CarService(carDao);
+    }
+
+    @BeforeAll
+    static void beforeAll() {
+        carMapper = mockStatic(CarMapper.class);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        carMapper.close();
     }
 
     @Test
@@ -52,7 +65,7 @@ class CarServiceTest {
         );
 
         //when
-        when(carMapper.mapToCarEntitiesFrom(any(), anyLong()))
+        when(CarMapper.mapToCarEntitiesFrom(any(), anyLong()))
                 .thenReturn(carEntities);
 
         carService.registerCars(racingGame, savedRaceResultId);

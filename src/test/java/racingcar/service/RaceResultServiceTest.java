@@ -1,8 +1,11 @@
 package racingcar.service;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import racingcar.dao.RaceResultDao;
 import racingcar.entity.CarEntity;
 import racingcar.entity.RaceResultEntity;
@@ -25,12 +28,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 @DisplayName("RaceResultService Unit Test")
 class RaceResultServiceTest {
 
-    private RaceResultMapper raceResultMapper;
+    private static MockedStatic<RaceResultMapper> raceResultMapper;
+
     private CarService carService;
     private RaceResultDao raceResultDao;
     private NumberGenerator numberGenerator;
@@ -40,15 +45,25 @@ class RaceResultServiceTest {
     @BeforeEach
     void dataInit() {
         carService = mock(CarService.class);
-        raceResultMapper = mock(RaceResultMapper.class);
         raceResultDao = mock(RaceResultDao.class);
         numberGenerator = new RandomNumberGenerator();
 
         raceResultService =
                 new RaceResultService(
-                        raceResultDao, carService,
-                        numberGenerator, raceResultMapper
+                        raceResultDao,
+                        carService,
+                        numberGenerator
                 );
+    }
+
+    @BeforeAll
+    static void beforeAll() {
+        raceResultMapper = mockStatic(RaceResultMapper.class);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        raceResultMapper.close();
     }
 
     @Test
@@ -70,7 +85,7 @@ class RaceResultServiceTest {
         final RaceResultResponse raceResultResponse = new RaceResultResponse("a,b,c", carStatusResponses);
 
         //when
-        when(raceResultMapper.mapToRaceResultEntity(any()))
+        when(RaceResultMapper.mapToRaceResultEntity(any()))
                 .thenReturn(raceResultEntity);
 
         when(raceResultDao.save(any()))
@@ -79,7 +94,7 @@ class RaceResultServiceTest {
         doNothing().when(carService)
                    .registerCars(any(), anyLong());
 
-        when(raceResultMapper.mapToRaceResultResponse(any()))
+        when(RaceResultMapper.mapToRaceResultResponse(any()))
                 .thenReturn(raceResultResponse);
 
         final RaceResultResponse raceResult = raceResultService.createRaceResult(gameInfoRequest);
@@ -118,7 +133,7 @@ class RaceResultServiceTest {
         when(carService.searchAllCars())
                 .thenReturn(cars);
 
-        when(raceResultMapper.mapToRaceResultResponses(cars))
+        when(RaceResultMapper.mapToRaceResultResponses(cars))
                 .thenReturn(raceResultResponses);
 
         final List<RaceResultResponse> result = raceResultService.searchRaceResult();

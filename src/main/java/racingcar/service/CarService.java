@@ -12,16 +12,14 @@ import java.util.List;
 public class CarService {
 
     private final CarDao carDao;
-    private final CarMapper carMapper;
 
-    public CarService(final CarDao carDao, final CarMapper carMapper) {
+    public CarService(final CarDao carDao) {
         this.carDao = carDao;
-        this.carMapper = carMapper;
     }
 
     public void registerCars(final RacingGame racingGame, final Long savedId) {
         final List<CarEntity> carEntities =
-                carMapper.mapToCarEntitiesFrom(racingGame, savedId);
+                CarMapper.mapToCarEntitiesFrom(racingGame, savedId);
 
         carDao.save(carEntities);
     }
